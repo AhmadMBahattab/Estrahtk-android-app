@@ -9,7 +9,7 @@ import AppNavigator from "./app/navigation/AppNavigator";
 export default function App() {
   return (
     <Screen>
-      <SignUp />
+      <Login />
     </Screen>
     // <NavigationContainer>
     //   <AppNavigator />
