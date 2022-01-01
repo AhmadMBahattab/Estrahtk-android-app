@@ -13,7 +13,7 @@ const SortBy = ({ items, setItems, value, setValue, sortPostsBy }) => {
         setValue={setValue}
         setItems={setItems}
         placeholder="Sort by"
-        // onChangeValue={(option) => sortPostsBy(option)}
+      
       />
     </>
   );

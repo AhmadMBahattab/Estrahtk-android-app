@@ -9,12 +9,12 @@ const Stack = createStackNavigator();
 
 const HomeNavigator = () => (
   <Stack.Navigator>
+    <Stack.Screen name="Single chalet" component={SingleChaletScreen} />
     <Stack.Screen
       name="Home"
       component={HomeScreen}
       options={{ headerShown: false }}
     />
-    <Stack.Screen name="Single chalet" component={SingleChaletScreen} />
   </Stack.Navigator>
 );
 export default HomeNavigator;

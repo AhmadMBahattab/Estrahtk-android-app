@@ -48,7 +48,7 @@ const allPosts = [
 
 const HomeScreen = ({ navigation }) => {
   const [postsArray, setpostsArray] = useState([...allPosts]);
-  const [searchQuery, setsearchQuery] = useState(" ");
+  const [searchQuery, setsearchQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -106,7 +106,6 @@ const HomeScreen = ({ navigation }) => {
     post.chaletName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  console.log(searchQuery);
   return (
     <>
       <View style={styles.searchQuery}>

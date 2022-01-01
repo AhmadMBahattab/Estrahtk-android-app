@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import {
   MaterialCommunityIcons,
@@ -15,13 +16,21 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import { Overlay, Button, Input } from "react-native-elements";
+import CommentSection from "../components/singleChalet/CommentSection";
 
+const user1 = {
+  username: "ahmad__s",
+  firstName: "Ahmad",
+  lastName: "Bahattab",
+  profileImage: require("../photos/user1.jpg"),
+};
 const SingleChaletScreen = ({ route }) => {
   const [singlePost, setsinglePost] = useState({ ...route.params });
   const [visible, setVisible] = useState(false);
   const [reserveVisible, setreserveVisible] = useState(false);
+  const [date, setDate] = useState(new Date());
   const [suggustPrice, setsuggustPrice] = useState(null);
-  const [commentValue, setcommentValue] = useState("");
+
   const [commentsArr, setcommentsArr] = useState([]);
 
   const toggleRateOverlay = () => {
@@ -35,17 +44,12 @@ const SingleChaletScreen = ({ route }) => {
   const ratingCompleted = (rating) => {
     console.log("comment value is: " + rating);
   };
-  const handeleCommentChange = (comment) => {
-    setcommentValue(comment);
-    console.log("Rating is: " + commentValue);
-  };
 
   const addComment = (newComment) => {
     let commentsArray = [...commentsArr];
     commentsArray.push(newComment);
-    setcommentValue(" ");
+
     setcommentsArr(commentsArray);
-    console.log(commentValue);
   };
 
   return (
@@ -102,35 +106,15 @@ const SingleChaletScreen = ({ route }) => {
       </Overlay>
 
       <Overlay isVisible={reserveVisible}>
-        <ReserveForm toggleReserveOverlay={toggleReserveOverlay} />
-      </Overlay>
-
-      <View style={styles.commentsContainer}>
-        <Text>Comments </Text>
-        <Input
-          placeholder="Comment"
-          leftIcon={{
-            type: "font-awesome",
-            name: "comment",
-            color: "gray",
-            size: 15,
-          }}
-          rightIcon={
-            commentValue.length > 0 ? (
-              <TouchableOpacity onPress={() => addComment(commentValue)}>
-                <Octicons name="triangle-right" color={"darkgray"} size={25} />
-              </TouchableOpacity>
-            ) : null
-          }
-          style={{ color: "gray" }}
-          onChangeText={(value) => handeleCommentChange(value)}
+        <ReserveForm
+          toggleReserveOverlay={toggleReserveOverlay}
+          suggustPrice={suggustPrice}
+          setsuggustPrice={setsuggustPrice}
+          date={date}
+          setDate={setDate}
         />
-        <View>
-          {commentsArr.map((item) => (
-            <Text key={item}>{item}</Text>
-          ))}
-        </View>
-      </View>
+      </Overlay>
+      <CommentSection commentsArr={commentsArr} addComment={addComment} />
     </ScrollView>
   );
 };
@@ -147,10 +131,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  commentsContainer: {
-    marginTop: 30,
-    marginBottom: 100,
   },
 });
 

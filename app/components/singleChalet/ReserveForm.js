@@ -10,9 +10,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Button } from "react-native-elements";
 import DatePicker from "react-native-datepicker";
 
-const ReserveForm = ({ toggleReserveOverlay }) => {
-  const [date, setDate] = useState(new Date());
-
+const ReserveForm = ({
+  toggleReserveOverlay,
+  suggustPrice,
+  setsuggustPrice,
+  date,
+  setDate,
+}) => {
   return (
     <>
       <TouchableOpacity
@@ -42,6 +46,7 @@ const ReserveForm = ({ toggleReserveOverlay }) => {
             borderWidth: 1,
             borderColor: "#a5a5a5",
           }}
+          keyboardType="numeric"
         ></TextInput>
 
         <View style={styles.reserveButtonsContainer}>
