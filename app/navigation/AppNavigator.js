@@ -1,11 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import MyChaletScreen from "../screens/MyChaletScreen";
 import AccountScreens from "../screens/AccountScreen";
+import MapScreen from "../screens/MapScreen";
 import Screen from "../components/Screen";
+
+import HomeNavigator from "./HomeNavigator";
+
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
@@ -13,11 +17,20 @@ const AppNavigator = () => {
     <Screen>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen
-          name="Home"
-          component={HomeScreen}
+          name="Home page"
+          component={HomeNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        ></Tab.Screen>
+        <Tab.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome5 name="map-marker-alt" color={color} size={size} />
             ),
           }}
         ></Tab.Screen>
