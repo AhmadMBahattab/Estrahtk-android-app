@@ -27,9 +27,7 @@ const CommentSection = ({ commentsArr, addComment }) => {
   return (
     <View style={styles.commentsContainer}>
       <View style={styles.commentInput}>
-        <Text style={{ fontSize: 20, marginBottom: 10 }}>
-          Comments section{" "}
-        </Text>
+        <Text style={{ fontSize: 20, marginBottom: 10 }}>Comments section</Text>
         <Input
           placeholder="Comment..."
           leftIcon={{
