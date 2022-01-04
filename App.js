@@ -1,5 +1,6 @@
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import Screen from "./app/components/Screen";
+import Screen from "./app/components/Reusable/Screen.js";
 import HomeScreen from "./app/screens/HomeScreen";
 import { StyleSheet, Text, View } from "react-native";
 import AppNavigator from "./app/navigation/AppNavigator";

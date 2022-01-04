@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   MaterialCommunityIcons,
-  MaterialIcons,
+  FontAwesome,
   Octicons,
 } from "@expo/vector-icons";
 import {
@@ -24,31 +24,55 @@ const user1 = {
 
 const CommentSection = ({ commentsArr, addComment }) => {
   const [commentValue, setcommentValue] = useState("");
+
+  const handeleCommentChange = (text) => {
+    if (commentValue.length >= 120) {
+      return;
+    }
+    setcommentValue(text);
+  };
   return (
     <View style={styles.commentsContainer}>
-      <View style={styles.commentInput}>
+      <View style={styles.commentInputContainer}>
         <Text style={{ fontSize: 20, marginBottom: 10 }}>Comments section</Text>
-        <Input
-          placeholder="Comment..."
-          leftIcon={{
-            type: "font-awesome",
-            name: "comment",
-            color: "gray",
-            size: 15,
-          }}
-          rightIcon={
-            commentValue.length > 0 ? (
-              <TouchableOpacity
+        <View style={styles.commentInput}>
+          <Input
+            placeholder="Comment..."
+            leftIcon={{
+              type: "font-awesome",
+              name: "comment",
+              color: "gray",
+              size: 15,
+            }}
+            rightIcon={
+              <Text style={{ color: "gray" }}> {commentValue.length} /120</Text>
+            }
+            style={{ color: "black", backgroundColor: "white" }}
+            onChangeText={(text) => handeleCommentChange(text)}
+            value={commentValue}
+          />
+          <View style={{ width: "30%" }}>
+            <TouchableOpacity disabled={commentValue.length > 0 ? false : true}>
+              <Button
+                title={
+                  <FontAwesome name="chevron-right" size={24} color="white" />
+                }
                 onPress={() => [addComment(commentValue), setcommentValue("")]}
-              >
-                <Octicons name="triangle-right" color={"darkgray"} size={25} />
-              </TouchableOpacity>
-            ) : null
-          }
-          style={{ color: "gray", backgroundColor: "white" }}
-          onChangeText={(text) => setcommentValue(text)}
-          value={commentValue}
-        />
+                style={{ marginBottom: 10 }}
+                buttonStyle={{
+                  backgroundColor: "rgba(90, 154, 230, 1)",
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 30,
+                }}
+                containerStyle={{
+                  width: 80,
+                }}
+                disabled={commentValue.length > 0 ? false : true}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
       <View>
@@ -84,6 +108,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 100,
     backgroundColor: "#E1E3E2",
+  },
+  commentInputContainer: {
+    padding: 5,
+    backgroundColor: "white",
   },
   commentInput: {
     padding: 5,

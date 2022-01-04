@@ -3,12 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
-import MyChaletScreen from "../screens/MyChaletScreen";
+import MyChaletScreen from "../screens/myChaletScreen/MyChaletScreen";
 import AccountScreens from "../screens/AccountScreen";
 import MapScreen from "../screens/MapScreen";
-import Screen from "../components/Screen";
+import Screen from "../components/Reusable/Screen";
 
 import HomeNavigator from "./HomeNavigator";
+import MyChaletNavigator from "./MyChaletNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +37,7 @@ const AppNavigator = () => {
         ></Tab.Screen>
         <Tab.Screen
           name="My chalets"
-          component={MyChaletScreen}
+          component={MyChaletNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons

@@ -30,7 +30,6 @@ const SingleChaletScreen = ({ route }) => {
   const [reserveVisible, setreserveVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [suggustPrice, setsuggustPrice] = useState(null);
-
   const [commentsArr, setcommentsArr] = useState([]);
 
   const toggleRateOverlay = () => {
