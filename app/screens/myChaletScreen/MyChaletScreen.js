@@ -22,6 +22,7 @@ const allPosts = [
     id: 1,
     chaletName: "Al Morjan",
     image: require("../../photos/chalets1.png"),
+    imageUri: "null",
     price: 700,
     rate: 4.5,
     city: "Ryiadh",
@@ -31,6 +32,7 @@ const allPosts = [
     id: 2,
     chaletName: "Jm3yeh",
     image: require("../../photos/chalets2.jpg"),
+    imageUri: "null",
     price: 500,
     rate: 3.5,
     city: "Ryiadh",
@@ -40,12 +42,15 @@ const allPosts = [
     id: 3,
     chaletName: "Kharj",
     image: require("../../photos/chalets3.jpg"),
+    imageUri: "null",
     price: 450,
     rate: 4.0,
     city: "Ryiadh",
     description: "Nice chalet",
   },
 ];
+
+console.log(allPosts[0].image);
 
 const MyChaletScreen = () => {
   const [postsArray, setpostsArray] = useState([...allPosts]);
@@ -63,11 +68,19 @@ const MyChaletScreen = () => {
     setpostsArray(allPosts);
     setaddPostVisable(false);
   };
+
+  const deletePost = (postId) => {
+    let allPosts = [...postsArray];
+    allPosts = allPosts.filter((post) => {
+      return post.id != postId;
+    });
+    setpostsArray(allPosts);
+  };
   return (
     <>
       <ScrollView style={styles.container}>
         {postsArray.map((item) => (
-          <AllPosts item={item} />
+          <AllPosts item={item} deletePost={deletePost} />
         ))}
       </ScrollView>
 

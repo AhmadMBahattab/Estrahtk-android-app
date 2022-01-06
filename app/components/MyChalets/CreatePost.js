@@ -1,22 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Input } from "react-native-elements";
 import DropDownPicker from "react-native-dropdown-picker";
+import * as ImagePicker from "expo-image-picker";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { MaterialCommunityIcons, EvilIcons } from "@expo/vector-icons";
 
 const CreatePost = ({ addPost, toggleAddPostOverlay }) => {
+  const requestCameraPermession = async () => {
+    const result = await ImagePicker.requestCameraPermissionsAsync();
+    if (!result.granted) {
+      alert("Yoe need enable permession");
+    }
+  };
+  useEffect(() => {
+    requestCameraPermession();
+  }, []);
+
   const [chaletName, setchaletName] = useState("");
   const [price, setprice] = useState("");
+  const [imageUri, setimageUri] = useState();
   const [city, setcity] = useState("");
   const [neighborhood, setneighborhood] = useState("");
   const [description, setdescription] = useState("");
-
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -38,15 +50,26 @@ const CreatePost = ({ addPost, toggleAddPostOverlay }) => {
     return textNum;
   };
 
+  const selectImageFromLibrary = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync();
+      if (!result.cancelled) {
+        setimageUri(result.uri);
+      }
+    } catch (error) {
+      console.log("Error reding image", error);
+    }
+  };
+  console.log(imageUri);
   let newPost = {
     chaletName,
     price,
     rate: 0,
+    imageUri,
     city,
     neighborhood,
     description,
   };
-
   return (
     <>
       <TouchableOpacity
@@ -56,6 +79,20 @@ const CreatePost = ({ addPost, toggleAddPostOverlay }) => {
         <Text style={{ fontWeight: "bold", color: "gray" }}>X</Text>
       </TouchableOpacity>
       <ScrollView style={styles.addPostContainer}>
+        <TouchableOpacity onPress={selectImageFromLibrary}>
+          <View
+            style={styles.imageInput}
+            onChangeText={(text) => setimageUri(text)}
+          >
+            {!imageUri && (
+              <MaterialCommunityIcons name="camera" size={40} color="gray" />
+            )}
+            {imageUri && (
+              <Image style={styles.image} source={{ uri: imageUri }} />
+            )}
+          </View>
+        </TouchableOpacity>
+
         <Input
           label="Chalet name"
           onChangeText={(text) => setchaletName(text)}
@@ -84,7 +121,7 @@ const CreatePost = ({ addPost, toggleAddPostOverlay }) => {
           label="Neighborhood"
           onChangeText={(text) => setneighborhood(text)}
         />
-        <View style={styles.dropdownContainer}>
+        {/* <View style={styles.dropdownContainer}>
           <DropDownPicker
             style={{ margin: 10, width: 120 }}
             open={open}
@@ -108,7 +145,7 @@ const CreatePost = ({ addPost, toggleAddPostOverlay }) => {
             placeholder="Neighborhood"
             onChangeValue={(option) => sortPostsBy(option)}
           />
-        </View>
+        </View> */}
         <Input
           label="Descreption"
           multiline={true}
@@ -125,7 +162,8 @@ const CreatePost = ({ addPost, toggleAddPostOverlay }) => {
           chaletName.length > 4 &&
           chaletName.length < 30 &&
           city != "" &&
-          neighborhood != ""
+          neighborhood != "" &&
+          imageUri != "null"
             ? false
             : true
         }
@@ -159,8 +197,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#D4D4D4",
     marginBottom: 20,
   },
+  imageInput: {
+    marginBottom: 20,
+    padding: 30,
+    backgroundColor: "#E2E4E3",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   image: {
-    width: "100%",
+    width: 200,
+    height: 200,
   },
   infoLayout: {
     width: "80%",
