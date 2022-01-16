@@ -10,6 +10,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": ["@react-native-mapbox-gl/maps"],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
